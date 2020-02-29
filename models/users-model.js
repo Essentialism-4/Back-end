@@ -12,23 +12,38 @@ function getAll() {
     return db('users');
 }
 
-function getByID() {
-    return db('users');
-}
+function getByID(id) {
+    return db('users')
+    .where({ id })
+    .first();
+}  
 
 
+//Post
 function insert() {
-    return db('users');
+    return db('users')
+    .insert(user, 'id')
+    .then(ids => {
+        const [id] = ids;
+        return findById(id);
+    })
 }
 
 
-function update() {
-    return db('users');
+// Put
+function update(user) {
+    return db('users')
+    .insert(user, 'id')
+    .then(ids => {
+        const [id] = ids;
+        return findById(id);
+    });
 }
-
 
 function remove() {
-    return db('users');
+    return db('users')
+    .wher({ id })
+    .del
 }
 
 
