@@ -2,7 +2,8 @@ const db = require('../config/db-config.js');
 
 module.exports = {
     getAll,
-    getByID,
+    findBy,
+    findByID,
     insert,
     update,
     remove
@@ -12,7 +13,11 @@ function getAll() {
     return db('users');
 }
 
-function getByID(id) {
+function findBy(filter) {
+    return db('users').where(filter);
+  }
+
+function findByID(id) {
     return db('users')
     .where({ id })
     .first();
@@ -20,12 +25,12 @@ function getByID(id) {
 
 
 //Post
-function insert() {
+function insert(user) {
     return db('users')
     .insert(user, 'id')
     .then(ids => {
         const [id] = ids;
-        return findById(id);
+        return findByID(id);
     })
 }
 
@@ -36,13 +41,13 @@ function update(user) {
     .insert(user, 'id')
     .then(ids => {
         const [id] = ids;
-        return findById(id);
+        return findByID(id);
     });
 }
 
-function remove() {
+function remove(id) {
     return db('users')
-    .wher({ id })
+    .where({ id })
     .del
 }
 
