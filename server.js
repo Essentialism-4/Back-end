@@ -12,7 +12,7 @@ server.use(express.json());
 server.use(cors());
 
 server.use('/api/auth', authRouter);
-// server.use('/api/users', usersRouter);
+server.use('/api/users', usersRouter);
 
 server.get('/', (req, res) => {
   res.send("Server.get is working!");
