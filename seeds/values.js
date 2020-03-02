@@ -24,7 +24,7 @@ exports.seed = function(knex) {
         {id: 17, name: 'Success in my Career'},
         {id: 18, name: 'Reading More Books'},
         {id: 19, name: 'Trying Diffrent Foods'},
-        {id: 18, name: 'Other'}
+        {id: 20, name: 'Other'}
 
       ]);
     });
