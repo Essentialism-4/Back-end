@@ -20,10 +20,47 @@ exports.up = function (knex) {
 
 
 
-    });
+    })
+
+    .createTable('values', tbl =>{
+        tbl.increments();
+
+        tbl.string('name', 128)
+        .unique()
+
+        // tbl.integer('user_id')
+        // .unsigned()
+        // .references('id')
+        // .inTable('users')
+        // .onUpdate('CASCADE')
+        // .onDelete('CASCADE');
+
+    })
+
+    .createTable('users_values', tbl =>{
+        tbl.increments();
+
+        tbl.integer('user_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('users')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE');
+
+        tbl.integer('value_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('values')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE');
+    })
 
 };
 
 exports.down = function (knex) {
-    return knex.schema.dropTableIfExists('users');
+    return knex.schema.dropTableIfExists('users_values')
+    .dropTableIfExists('values')
+    .dropTableIfExists('users');
 };
