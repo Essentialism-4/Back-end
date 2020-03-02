@@ -12,11 +12,11 @@ exports.up = function (knex) {
             .string('password', 64)
             .notNullable();
 
-        tbl //Values
-            .specificType('values_array', 'text ARRAY')
+        // tbl //Values
+        //     .specificType('values_array', 'text ARRAY')
 
-        tbl //Top 3 Values
-            .specificType('top3_array', 'text ARRAY')
+        // tbl //Top 3 Values
+        //     .specificType('top3_array', 'text ARRAY')
 
 
 
@@ -25,8 +25,8 @@ exports.up = function (knex) {
     .createTable('values', tbl =>{
         tbl.increments();
 
-        tbl.string('name', 128)
-        .unique()
+        tbl.string('name', 128);
+        
 
         // tbl.integer('user_id')
         // .unsigned()

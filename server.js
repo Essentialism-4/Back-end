@@ -15,7 +15,7 @@ server.use('/api/auth', authRouter);
 server.use('/api/users', usersRouter);
 
 server.get('/', (req, res) => {
-  res.send("Server.get is working!");
+  res.send("You've reached the Essentialism back end!");
 });
 
 module.exports = server;
