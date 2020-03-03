@@ -6,6 +6,12 @@ module.exports = {
     getValueByID,
     insert,
     update,
+    // insertCustomValue,
+    // updateCustomValue,
+    // deleteCustomValue,
+    // insertTop3,
+    // updateTop3,
+    // deleteTop3,
     // remove
 };
 
@@ -18,7 +24,7 @@ function getValueByID(id) { // Untested
         .where({ id });
 }
 
-function findValuesByUserID(id) { // Works
+function findValuesByUserID(id) { // Works //Remember to include new custom values, parsing into an array where appropriate
     return db('values')
         .join('users_values', 'users_values.value_id', '=', 'values.id')
         .select('values.*')

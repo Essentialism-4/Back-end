@@ -6,9 +6,9 @@ module.exports = {
     findByID,
     insert,
     update,
-    remove
+    remove,
 };
-
+//==============
 function getAll() {
     return db('users');
 }
@@ -52,4 +52,4 @@ function remove(id) {
         .del
 }
 
-
+//================================================================================

@@ -4,7 +4,7 @@ exports.seed = function(knex) {
     .then(function () {
       // Inserts seed entries 
       return knex('users').insert([
-        {id: 1, username: 'admin', password: "test"},
+        {id: 1, username: 'admin', password: "test", custom_values: "Ruling the world, Petting cats, Escaping the simualtion", top3_values:"School, Friends, Escaping the simulation", importance_prompt: "These things are important to me because reasons", involvement_prompt: "" },
       ]);
     });
 };
