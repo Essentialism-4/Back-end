@@ -18,7 +18,7 @@ exports.up = function (knex) {
         // tbl //Top 3 Values
         //     .specificType('top3_array', 'text ARRAY')
 
-
+        
 
     })
 

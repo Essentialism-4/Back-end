@@ -15,40 +15,41 @@ function getAll() {
 
 function findBy(filter) {
     return db('users').where(filter);
-  }
+}
 
 function findByID(id) {
     return db('users')
-    .where({ id })
-    .first();
-}  
+        .where({ id })
+        .first();
+}
 
 
 //Post
 function insert(user) {
     return db('users')
-    .insert(user, 'id')
-    .then(ids => {
-        const [id] = ids;
-        return findByID(id);
-    })
+        .insert(user, 'id')
+        .then(ids => {
+            const [id] = ids;
+            return findByID(id);
+        })
 }
 
 
 // Put
-function update(user) {
+function update(user, id) {
     return db('users')
-    .insert(user, 'id')
-    .then(ids => {
-        const [id] = ids;
-        return findByID(id);
-    });
+        .where('id', Number(id))
+        .update(user)
+        .then(()=>{
+            return findByID(id)
+        });
 }
+
 
 function remove(id) {
     return db('users')
-    .where({ id })
-    .del
+        .where({ id })
+        .del
 }
 
 
