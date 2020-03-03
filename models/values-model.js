@@ -4,9 +4,11 @@ module.exports = {
     getAllValues,
     findValuesByUserID,
     getValueByID,
-    insert,
+    // insert,
     update,
-    // insertCustomValue,
+    getCustomValuesByID,
+    insertCustomValue,
+    viewAllCustomValues,
     // updateCustomValue,
     // deleteCustomValue,
     // insertTop3,
@@ -29,22 +31,37 @@ function findValuesByUserID(id) { // Works //Remember to include new custom valu
         .join('users_values', 'users_values.value_id', '=', 'values.id')
         .select('values.*')
         .where({ user_id: id });
+};
+//PERTAINING TO CUSTOM VALUES ON A USER PROFILE
+// =======================================================================================================================
+
+function viewAllCustomValues(){
+    return db('custom_values');
+}
+
+function getCustomValuesByID(id) {    // Needs work, we want to post values to only a user, not the total list of values
+    return db.select('custom_values')
+    .from('users')
+    .where({id})
+    // .then(() =>{
+    //     // console.log('Model res for custom values: ', res);
+    // })
+    
 }
 
 
-//Post
-function insert(value) {    // Needs work, we want to post values to only a user, not the total list of values
-    return db('values')
-        .insert(value, 'id')
-        .then(ids => {
-            const [id] = ids;
-            return getValueByID(id).first();
-        })
+function insertCustomValue(value, id){
+    return db.select('custom_values')
+    .where({user_id : id})
+    .insert(value)
+    // .then(([id]) =>{
+
+    // })
+    
 }
-
-
-// Put  // To be continued with at a later time
-function update(value, id) {
+//=========================================================================================================================
+//PUT to all values
+function update(value, id) { //Works but not likely to be used
     return db('values')
         .where('id', Number(id))
         .update(value)

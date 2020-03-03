@@ -12,8 +12,8 @@ exports.up = function (knex) {
             .string('password', 64)
             .notNullable();
 
-        tbl //Values
-            .string('custom_values');
+        // tbl //Values
+        //     .string('custom_values');
 
         tbl //Top 3 Values
             .string('top3_values');
@@ -31,13 +31,20 @@ exports.up = function (knex) {
 
             tbl.string('name', 128);
 
+        })
 
-            // tbl.integer('user_id')
-            // .unsigned()
-            // .references('id')
-            // .inTable('users')
-            // .onUpdate('CASCADE')
-            // .onDelete('CASCADE');
+        .createTable('custom_values', tbl => {
+            tbl.increments();
+
+            tbl.string('name', 128)
+            .notNullable();
+            tbl.integer('user_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('users')
+            .onUpdate('CASCADE')
+            .onDelete('CASCADE');
 
         })
 
@@ -67,5 +74,6 @@ exports.down = function (knex) {
     return knex.schema
         .dropTableIfExists('users_values')
         .dropTableIfExists('values')
+        .dropTableIfExists('custom_values')
         .dropTableIfExists('users');
 };
