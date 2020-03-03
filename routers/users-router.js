@@ -7,6 +7,8 @@ const router = express.Router();
 
 const authenticate = require('../auth/auth-router')
 
+
+
 // we would like this to be protected 
 router.get('/', authenticate, (req, res) => {
     User.getAll()
