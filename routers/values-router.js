@@ -18,25 +18,24 @@ router.get('/', (req,res) =>{ //Working but should be put into a 'values-router'
 })
 
 router.post('/',  (req, res) => {
-
-    Values.update(req.user)
-    .then(value => res.json(value))
-    .catch(err => res.status(500).json({ message: 'Value cannot be created', Error: err }))
+    Values.insert(req.body)
+    .then(value => res.status(200).json({value}))
+    .catch(err => res.status(500).json({ message: 'Value cannot be added', Error: err }))
 });
 
-router.put('/:id', (req, res) => {
+// router.put('/:id', (req, res) => {
 
-    Values.update(req.params.id, req.user)
-    .then(value => res.json(value))
-    .catch(err => res.status(500).json({ error: 'valuse cannot be made', Error: err}))
-})
+//     Values.update(req.params.id, req.user)
+//     .then(value => res.json(value))
+//     .catch(err => res.status(500).json({ error: 'valuse cannot be made', Error: err}))
+// })
 
-router.delete('/id:', (req, res) => {
-    Values.remove(req.params.id)
-    .then(count => {
-        res.status(200).json({ message: 'could not delete selected value'})
-    })
-});
+// router.delete('/id:', (req, res) => {
+//     Values.remove(req.params.id)
+//     .then(count => {
+//         res.status(200).json({ message: 'could not delete selected value'})
+//     })
+// });
 
 // router.delete('/values', (req, res) => {
 //     Values.remove(req.params)
