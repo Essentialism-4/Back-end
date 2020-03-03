@@ -4,7 +4,7 @@
   "description": "For back end devs!",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --watch --verbose",
     "server": "nodemon index.js",
     "start": "node index.js"
   },
@@ -25,9 +25,14 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^3.21.3",
+    "jest": "^25.1.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.20.10",
     "nodemon": "^2.0.2",
-    "sqlite3": "^4.1.1"
+    "sqlite3": "^4.1.1",
+    "supertest": "^4.0.2"
+  },
+  "jest": {
+    "testEnvirnoment": "node"
   }
 }
