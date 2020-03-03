@@ -46,17 +46,12 @@ router.get('/:id/values', (req, res) =>{
     })
 })
 
+router.delete('/:id', (req, res) => {
+    User.remove(req.params.id)
+    .then(count => {
+        res.status(200).json({ message: 'could not delete user'})
+    })
+});
 
-router.get('/values', (req,res) =>{ //Working but should be put into a 'values-router' file
-    Values.getAllValues()
-    .then(values =>{
-        res.status(200).json({"All values": values})
-    })
-    .catch(err =>{
-        res.status(500).json({message: "Error retrieving values",
-    Error: err
-    })
-    })
-})
 
 module.exports = router; 
