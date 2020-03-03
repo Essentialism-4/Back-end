@@ -15,37 +15,37 @@ function getAllValues() { // Works
 
 function getValueByID(id) { // Untested 
     return db('values')
-    .where({id});
+        .where({ id });
 }
 
 function findValuesByUserID(id) { // Works
     return db('values')
-    .join('users_values', 'users_values.value_id', '=', 'values.id')
-    .select('values.*')
-    .where({ user_id : id });
-}  
+        .join('users_values', 'users_values.value_id', '=', 'values.id')
+        .select('values.*')
+        .where({ user_id: id });
+}
 
 
 //Post
 function insert(value) {    // Needs work, we want to post values to only a user, not the total list of values
     return db('values')
-    .insert(value, 'id')
-    .then(ids => {
-        const [id] = ids;
-        return getValueByID(id).first();
-    })
+        .insert(value, 'id')
+        .then(ids => {
+            const [id] = ids;
+            return getValueByID(id).first();
+        })
 }
 
 
 // Put  // To be continued with at a later time
-function update(value) {
+function update(value, id) {
     return db('values')
-    .insert(value, 'id')
-    .then(ids => {
-        const [id] = ids;
-        return getValueByID(id);
-    });
-}
+        .where('id', Number(id))
+        .update(value)
+        .then(()=>{
+            return getValueByID(id)
+        });
+};
 
 // function remove(id) {
 //     return db('users')
