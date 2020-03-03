@@ -5,7 +5,7 @@ module.exports = {
     findValuesByUserID,
     getValueByID,
     insert,
-    // update,
+    update,
     // remove
 };
 
@@ -37,15 +37,15 @@ function insert(value) {    // Needs work, we want to post values to only a user
 }
 
 
-// // Put  // To be continued with at a later time
-// function update(user) {
-//     return db('users')
-//     .insert(user, 'id')
-//     .then(ids => {
-//         const [id] = ids;
-//         return findByID(id);
-//     });
-// }
+// Put  // To be continued with at a later time
+function update(value) {
+    return db('values')
+    .insert(value, 'id')
+    .then(ids => {
+        const [id] = ids;
+        return getValueByID(id);
+    });
+}
 
 // function remove(id) {
 //     return db('users')
