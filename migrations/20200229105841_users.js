@@ -38,6 +38,7 @@ exports.up = function (knex) {
 
             tbl.string('name', 128)
             .notNullable();
+
             tbl.integer('user_id')
             .unsigned()
             .notNullable()

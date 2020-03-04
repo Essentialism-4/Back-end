@@ -4,13 +4,13 @@ module.exports = {
     getAllValues,
     findValuesByUserID,
     getValueByID,
-    // insert,
+    addValueToProfile,
     update,
     getCustomValuesByID,
     insertCustomValue,
     viewAllCustomValues,
-    // updateCustomValue,
-    // deleteCustomValue,
+    updateCustomValue,
+    deleteCustomValue,
     // insertTop3,
     // updateTop3,
     // deleteTop3,
@@ -32,7 +32,12 @@ function findValuesByUserID(id) { // Works //Remember to include new custom valu
         .select('values.*')
         .where({ user_id: id });
 };
-//PERTAINING TO CUSTOM VALUES ON A USER PROFILE
+
+function addValueToProfile(valueInfo){
+    return db('users_values')
+    .insert(valueInfo, 'id');
+}
+//PERTAINING TO CUSTOM, USER-SUBMITTED VALUES 
 // =======================================================================================================================
 
 function viewAllCustomValues(){
@@ -40,24 +45,35 @@ function viewAllCustomValues(){
 }
 
 function getCustomValuesByID(id) {    // Needs work, we want to post values to only a user, not the total list of values
-    return db.select('custom_values')
-    .from('users')
-    .where({id})
+    return db('custom_values')
+    .where({user_id : id})
     // .then(() =>{
     //     // console.log('Model res for custom values: ', res);
     // })
-    
 }
 
-
-function insertCustomValue(value, id){
-    return db.select('custom_values')
-    .where({user_id : id})
-    .insert(value)
+function insertCustomValue(value){  //may need id param
+    return db('custom_values')
+    // .where({user_id : id})
+    .insert(value, 'id')
     // .then(([id]) =>{
 
     // })
-    
+}
+
+
+function updateCustomValue(value, id) { //Works but not likely to be used
+    return db('custom_values')
+        .where('id', Number(id))
+        .update(value);
+
+};
+
+
+function deleteCustomValue(id) {
+    return db('custom_values')
+    .where({ id })
+    .del();
 }
 //=========================================================================================================================
 //PUT to all values

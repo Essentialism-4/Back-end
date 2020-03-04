@@ -66,7 +66,14 @@ router.get('/:id/values/custom', (req, res) => {
 
 });
 
+router.post('/:id/values', (req, res) => {
 
+    const {id} = req.params;
+
+    Values.addValueToProfile(req.body, id)
+        .then(value => res.status(200).json({message: "Value added to profile", value }))
+        .catch(err => res.status(500).json({ message: 'Value cannot be added', Error: err }))
+});
 
 router.delete('/:id', (req, res) => {
     User.remove(req.params.id)
