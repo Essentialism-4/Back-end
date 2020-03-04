@@ -4,9 +4,13 @@ const users = require('./seeds/users_values.js')
 
 const values = require('./seeds/values.js')
 
-describe('GET /values', function () {
+describe('GET /', function () {
     it(' should get values return 500 Ok', function() {
         expect(true).toBe(true);
+    })
+    it('should test the endpoint', async done => {
+        const response = await request.agent('/values');
+        done();
     })
 })
 
@@ -22,7 +26,7 @@ test('Delete value id Delete /values/:id', async () => {
 // })
 
 describe('POST /register', () => {
-    it('should return 500 OK', () => {
+    it('should register users', () => {
         return request(server).post('/api/auth/register').send({username:"testing1",password:"test"})
         .then(res => {
             expect(res.status).toBe(500);
@@ -34,10 +38,15 @@ describe('POST /register', () => {
             expect(res.type).toMatch(/json/i);
         })
     })
+    it('should test the endpoint', async done => {
+        const response = await request.agent('/register');
+        done();
+    })
 })
 
 describe('POST /values', () => {
-    it ('should return 500 Ok', () => {
+    const url = '/values'
+    it ('should return posted value', () => {
         return request(server).post('/api/values').send({name: "testing1"})
         .then(res => {
             expect(res.status).toBe(200);
@@ -50,4 +59,9 @@ describe('POST /values', () => {
             expect(res.type).toMatch(/json/i);
         })
     })
+    it('should test the endpoint', async done => {
+        const response = await request.agent('/values');
+        done();
+    })
 })
+
