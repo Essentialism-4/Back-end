@@ -48,29 +48,27 @@ router.get('/:id/values', (req, res) => {
         })
 })
 
-router.get('/:id/values/custom', (req, res) => {
-    const { id } = req.params;
+// router.get('/:id/values/custom', (req, res) => {
+//     const { id } = req.params;
 
-    Values.getCustomValuesByID(id)   //Get the values that user added to their own profile
-        .then(userCustomValues => {
+//     Values.getCustomValuesByID(id)   //Get the values that user added to their own profile
+//         .then(userCustomValues => {
 
-            //Convert to a nice array for my front enders
+//             //Convert to a nice array for my front enders
 
-            const userCustomValuesArray = userCustomValues[0].custom_values.split(",");
+//             const userCustomValuesArray = userCustomValues[0].custom_values.split(",");
 
-            res.status(200).json({ "This user's custom values": userCustomValuesArray });
-        })
-        .catch(err => {
-            res.status(500).json({ message: "Unable to retrieve custom values for this user", Error: err })
-        })
+//             res.status(200).json({ "This user's custom values": userCustomValuesArray });
+//         })
+//         .catch(err => {
+//             res.status(500).json({ message: "Unable to retrieve custom values for this user", Error: err })
+//         })
 
-});
+// });
 
-router.post('/:id/values', (req, res) => {
+router.post('/user-values', (req, res) => {
 
-    const {id} = req.params;
-
-    Values.addValueToProfile(req.body, id)
+    Values.addValueToProfile(req.body)
         .then(value => res.status(200).json({message: "Value added to profile", value }))
         .catch(err => res.status(500).json({ message: 'Value cannot be added', Error: err }))
 });
