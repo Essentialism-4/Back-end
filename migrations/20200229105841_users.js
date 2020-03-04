@@ -12,8 +12,6 @@ exports.up = function (knex) {
             .string('password', 64)
             .notNullable();
 
-        // tbl //Values
-        //     .string('custom_values');
 
         tbl //Top 3 Values
             .string('top3_values');

@@ -11,6 +11,7 @@ module.exports = {
     viewAllCustomValues,
     updateCustomValue,
     deleteCustomValue,
+    // getTop3ByID,
     // insertTop3,
     // updateTop3,
     // deleteTop3,
@@ -47,9 +48,6 @@ function viewAllCustomValues(){
 function getCustomValuesByID(id) {    // Needs work, we want to post values to only a user, not the total list of values
     return db('custom_values')
     .where({user_id : id})
-    // .then(() =>{
-    //     // console.log('Model res for custom values: ', res);
-    // })
 }
 
 function insertCustomValue(value){  //may need id param
@@ -75,7 +73,17 @@ function deleteCustomValue(id) {
     .where({ id })
     .del();
 }
+
+//TOP 3 Values functions
 //=========================================================================================================================
+
+
+
+
+
+
+//=========================================================================================================================
+
 //PUT to all values
 function update(value, id) { //Works but not likely to be used
     return db('values')
