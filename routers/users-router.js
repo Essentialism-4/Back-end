@@ -10,7 +10,7 @@ const authenticate = require('../auth/auth-router')
 
 
 // we would like this to be protected 
-router.get('/', authenticate, (req, res) => {
+router.get('/', (req, res) => {
     User.getAll()
         .then(users => {
             res.json(users);
@@ -48,28 +48,44 @@ router.get('/:id/values', (req, res) => {
         })
 })
 
-// router.get('/:id/values/custom', (req, res) => {
-//     const { id } = req.params;
+router.get('/:id/values/top', (req,res) =>{  
+    const {id} = req.params;
+    
+    Values.getTop3ByID(id)   //Get the values that user added to their own profile
+    .then(top3=> {
 
-//     Values.getCustomValuesByID(id)   //Get the values that user added to their own profile
-//         .then(userCustomValues => {
+        //Convert to a nice array for my front enders
 
-//             //Convert to a nice array for my front enders
+        const usertop3Array = top3[0].top3_values.split(",");
 
-//             const userCustomValuesArray = userCustomValues[0].custom_values.split(",");
+        res.status(200).json({ "This user's top 3 values": usertop3Array});
+    })
+    .catch(err => {
+        res.status(500).json({ message: "Unable to retrieve top 3 for this user", Error: err })
+    })
 
-//             res.status(200).json({ "This user's custom values": userCustomValuesArray });
-//         })
-//         .catch(err => {
-//             res.status(500).json({ message: "Unable to retrieve custom values for this user", Error: err })
-//         })
+})
 
-// });
+router.put('/:id/values/top', (req, res) => {
+
+    console.log(req.body);
+    const {id} = req.params;
+
+    const top3String = req.body.top3_values.toString();
+
+    console.log(top3String);
+
+    Values.insertTop3(top3String, id)
+        .then(value => res.status(200).json({ message: "Value added to profile", value }))
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ message: 'Value cannot be added', Error: err })})
+});
 
 router.post('/user-values', (req, res) => {
 
     Values.addValueToProfile(req.body)
-        .then(value => res.status(200).json({message: "Value added to profile", value }))
+        .then(value => res.status(200).json({ message: "Value added to profile", value }))
         .catch(err => res.status(500).json({ message: 'Value cannot be added', Error: err }))
 });
 
