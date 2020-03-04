@@ -6,9 +6,11 @@ module.exports = {
     findByID,
     insert,
     update,
-    remove
+    remove,
 };
 
+//User Functions
+//=========================================================================================================
 function getAll() {
     return db('users');
 }
@@ -45,11 +47,11 @@ function update(user, id) {
         });
 }
 
-
+//Delete
 function remove(id) {
     return db('users')
         .where({ id })
         .del
 }
 
-
+//============================================================================================================
