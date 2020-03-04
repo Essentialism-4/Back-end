@@ -13,16 +13,13 @@ module.exports = {
     deleteCustomValue,
     getTop3ByID,
     insertTop3,
-    // updateTop3,
-    // deleteTop3,
-    // remove
 };
 
 function getAllValues() { // Works
     return db('values');
 }
 
-function getValueByID(id) { // Untested 
+function getValueByID(id) { // Works
     return db('values')
         .where({ id });
 }
