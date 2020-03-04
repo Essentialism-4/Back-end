@@ -11,8 +11,8 @@ module.exports = {
     viewAllCustomValues,
     updateCustomValue,
     deleteCustomValue,
-    // getTop3ByID,
-    // insertTop3,
+    getTop3ByID,
+    insertTop3,
     // updateTop3,
     // deleteTop3,
     // remove
@@ -77,10 +77,18 @@ function deleteCustomValue(id) {
 //TOP 3 Values functions
 //=========================================================================================================================
 
+function getTop3ByID(id){
+    return db('users')
+    .where({id})
+    .select('users.top3_values');
+}
 
-
-
-
+function insertTop3(valuesString, id){
+    return db('users')
+    .where('id', Number(id))
+    .select("top3_values")
+    .update({top3_values:valuesString});  //Need to give a full valid user obj to update
+}
 
 //=========================================================================================================================
 
