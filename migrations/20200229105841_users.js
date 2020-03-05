@@ -1,43 +1,58 @@
+//Schema for Users, Values, Saved values, Custom values, Top 3 values, Importance prompts, Involvement prompts
 
+
+
+// UP
+// ==================================================================================================================================================
 exports.up = function (knex) {
-    return knex.schema.createTable('users', tbl => {
-        tbl.increments();
+    return knex.schema.createTable('users', tbl => { //Stores all users, usernames and passwords, along with their top picks and prompts
+        
+        tbl //Primary key 'id'
+        .increments(); 
 
-        tbl
+        tbl //Username
             .string('username', 64)
             .notNullable()
             .unique();
 
-        tbl
+        tbl //Password
             .string('password', 64)
             .notNullable();
 
-
-        tbl //Top 3 Values
+        tbl //Top 3 Values a user chooses
             .string('top3_values');
 
 
-        tbl
-            .string('importance_prompt', 1028);
+        tbl //Why are these values of importance to you? 
+            .string('importance_prompt', 2028);
 
-        tbl
-            .string('involvement_prompt', 1028);
+        tbl //What projects and activities are you currently involved in?
+            .string('involvement_prompt', 2028);
     })
+// ==================================================================================================================================================
 
-        .createTable('values', tbl => {
-            tbl.increments();
+        .createTable('values', tbl => { //Stores all of our predetermined values that users can choose from 
+           
+            tbl //Primary key 'id'
+            .increments();
 
-            tbl.string('name', 128);
+            tbl //Name of this value
+            .string('name', 128);
 
         })
+// ==================================================================================================================================================
 
-        .createTable('custom_values', tbl => {
-            tbl.increments();
+        .createTable('custom_values', tbl => { //Stores any custom values users type in themselves. 
+            
+            tbl //Primary key 'id'
+            .increments();
 
-            tbl.string('name', 128)
+            tbl //Name of this custom value
+            .string('name', 128)
             .notNullable();
 
-            tbl.integer('user_id')
+            tbl //What user posted this custom value? 1:M relationship, references primary key in 'users' table
+            .integer('user_id') 
             .unsigned()
             .notNullable()
             .references('id')
@@ -46,11 +61,15 @@ exports.up = function (knex) {
             .onDelete('CASCADE');
 
         })
+// ==================================================================================================================================================
 
-        .createTable('users_values', tbl => {
-            tbl.increments();
+        .createTable('users_values', tbl => { //Linking table for the M:M relationship between default values and user profiles
+            
+            tbl //Primary key 'id'
+            .increments();
 
-            tbl.integer('user_id')
+            tbl //Foreign key references primary key in 'users' table
+            .integer('user_id')
                 .unsigned()
                 .notNullable()
                 .references('id')
@@ -58,7 +77,8 @@ exports.up = function (knex) {
                 .onUpdate('CASCADE')
                 .onDelete('CASCADE');
 
-            tbl.integer('value_id')
+            tbl //Foreign key references primary key in 'values' table
+            .integer('value_id')
                 .unsigned()
                 .notNullable()
                 .references('id')
@@ -69,6 +89,9 @@ exports.up = function (knex) {
 
 };
 
+
+// DOWN
+// ==================================================================================================================================================
 exports.down = function (knex) {
     return knex.schema
         .dropTableIfExists('users_values')
@@ -76,3 +99,4 @@ exports.down = function (knex) {
         .dropTableIfExists('custom_values')
         .dropTableIfExists('users');
 };
+// ==================================================================================================================================================

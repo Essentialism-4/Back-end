@@ -1,4 +1,5 @@
-
+// Our preset values users choose from
+// ======================================================================================
 exports.seed = function(knex) {
   // Deletes ALL existing entries
   return knex('values').del()

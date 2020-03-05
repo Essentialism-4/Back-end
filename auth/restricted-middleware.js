@@ -1,6 +1,13 @@
-
+//Imports
+// ==============================================================================================
 const jwt = require('jsonwebtoken');
 const secrets = require('../config/secrets.js')
+// ==============================================================================================
+
+
+
+//Exporting token validator middleware
+// ==============================================================================================
 module.exports = (req, res, next) => {
   const token = req.headers.authorization;
   if (token) {
@@ -22,3 +29,4 @@ module.exports = (req, res, next) => {
     res.status(400).json({ message: 'Token not working' });
   }
 };
+// ==============================================================================================
