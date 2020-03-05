@@ -84,7 +84,7 @@ function insertTop3(valuesString, id){
     return db('users')
     .where('id', Number(id))
     .select("top3_values")
-    .update({top3_values:valuesString});  //Need to give a full valid user obj to update
+    .update({top3_values:valuesString});  
 }
 
 //=========================================================================================================================
@@ -99,10 +99,10 @@ function update(value, id) { //Works but not likely to be used
         });
 };
 
-// function remove(id) {
+// function remove(id) {  // Don't really want clients to be able to delete user accounts I reckon
 //     return db('users')
 //     .where({ id })
-//     .del
+//     .del()
 // }
 
 
