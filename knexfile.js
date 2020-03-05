@@ -10,6 +10,20 @@ module.exports = {
     userNullAsDefault: true,
   },
 
+  testing: {
+    client: 'sqlite3',
+    connection: {
+      filename: './testingusers.db3'
+    },
+    userNullAsDefault: true,
+    migrations: {
+      directory: './migrations'
+    },
+    seeds: {
+      directory: './seeds'
+  },
+},
+
   staging: {
     client: 'postgresql',
     connection: {
@@ -45,5 +59,4 @@ module.exports = {
 
     }
   }
-
 };

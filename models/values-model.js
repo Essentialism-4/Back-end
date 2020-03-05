@@ -50,7 +50,7 @@ function getCustomValuesByID(id) {    // Needs work, we want to post values to o
     .where({user_id : id})
 }
 
-function insertCustomValue(value){  //may need id param
+async function insertCustomValue(value, id){  //may need id param
     return db('custom_values')
     // .where({user_id : id})
     .insert(value, 'id')
@@ -58,6 +58,8 @@ function insertCustomValue(value){  //may need id param
 
     // })
 }
+
+
 
 
 function updateCustomValue(value, id) { //Works but not likely to be used
