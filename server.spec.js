@@ -1,8 +1,15 @@
 const server = require('./server.js');
 const request = require('supertest');
-const users = require('./seeds/users_values.js')
+// const users = require('./seeds/users_values.js')
+const db = require('./config/db-config')
 
-const values = require('./seeds/values.js')
+const values = require('./models/values-model.js')
+const users = require('./models/users-model.js')
+
+
+beforeEach( async () => {
+    await db('users').truncate();
+}); 
 
 describe('GET /', function () {
     it(' should get values return 500 Ok', function() {
@@ -12,6 +19,7 @@ describe('GET /', function () {
         const response = await request.agent('/values');
         done();
     })
+
 })
 
 test('Delete value id Delete /values/:id', async () => {
@@ -19,17 +27,12 @@ test('Delete value id Delete /values/:id', async () => {
     expect(response.length);
 })
 
-// TESTING TO SEE IF DATABASE UPDATES 
-// test('new update', async () => {
-//     const response = await value.update({});
-//     expect(response.length + 1);
-// })
 
 describe('POST /register', () => {
     it('should register users', () => {
         return request(server).post('/api/auth/register').send({username:"testing1",password:"test"})
         .then(res => {
-            expect(res.status).toBe(500);
+            expect(res.status).toBe(201);
         })
     })
     it('should return JSON data', () => {
@@ -45,23 +48,80 @@ describe('POST /register', () => {
 })
 
 describe('POST /values', () => {
-    const url = '/values'
-    it ('should return posted value', () => {
-        return request(server).post('/api/values').send({name: "testing1"})
-        .then(res => {
-            expect(res.status).toBe(200);
+    // const url = '/values'
+    // it ('should return posted value', () => {
+    //     return request(server).post('/api/values').send({name: "testing1"})
+    //     .then(res => {
+    //         expect(res.status).toBe(200);
             
-        })
-    })
-    it('should return JSON data', () => {
-        return request(server).post('/api/values').send({name: "testing1"})
-        .then(res => {
-            expect(res.type).toMatch(/json/i);
-        })
-    })
+    //     })
+    // })
+    // it('should return JSON data', () => {
+    //     return request(server).post('/api/values').send({name: "testing1"})
+    //     .then(res => {
+    //         expect(res.type).toMatch(/json/i);
+    //     })
+    // })
     it('should test the endpoint', async done => {
         const response = await request.agent('/values');
         done();
     })
 })
 
+
+
+// TESTING TO ADD A VALUE TO LIST
+// describe("insert function", () => {
+//     it('insert value into db', async () => {
+//         let customValueInsert;
+//         const user = { username: 'test1', password:'pass', top3_values: ' swimming, religion, family', importance_prompt:'this is '}
+//         await values.insertCustomValue({ name: 'Learning to Play an Instrument', user_id: 0 });
+//         await values.insertCustomValue({ name: 'Starting a bookclub', user_id: 1 });
+//         customValueNumber = await db('custom_values');
+//         expect(customValueInsert).toHaveLength(2);
+//     })
+// })
+
+// describe('insert function', () => {
+//     it('inserts values into db', async () => {
+//         let valuesInput;
+//         valuesInput = await db('values');
+//         expect(valuesInput).toHaveLength(0);
+//         await values.insertCustomValue({user_id: 1 ,name: 'Cycling'})
+//         valuesInput = await db('values');
+//         expect(valuesInput).toHaveLength(1);
+//     })
+// })
+
+describe('GET /custom', function() {
+    it('should return 200 OK', async() => {
+        return request(server)
+            .get('/values')
+            .then(res => {
+                expect(res.status).toBe(200);
+            })
+        })
+    // it('should return an array of values', async () => {
+    //     expect([]).insertCustomValue();
+    //     expect([1]).insertCustomValue();
+    //     expect(true).not.insertCustomValue();
+    // });
+    });
+
+
+// describe('insert function', () => {
+//     it('insert value into db')
+// })
+
+
+//TESTING TO ADD A USER TO DATABASE
+// describe('insert function', () => {
+//     it('insert user into db', async () => {
+//         let userInsert;
+//         userInsert = await db('users');
+//         expect(userInsert).toHaveLength(1);
+//         await users.insert({ username: 'user001', password: "testing", top3_values:"Traveling,Friends,Relationship with God", importance_prompt: "These are important to me because...", involvement_prompt: "I have been involved in over 300  activites" });
+//         userInsert = await db('users');
+//         expect(userInsert).toHaveLength(1)
+//     })
+// })

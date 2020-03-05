@@ -4,7 +4,7 @@
   "description": "For back end devs!",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watch --verbose",
+    "test": "cross-env DB_ENV=testing jest --watch",
     "server": "nodemon index.js",
     "start": "node index.js"
   },
@@ -34,5 +34,8 @@
   },
   "jest": {
     "testEnvirnoment": "node"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.1"
   }
 }
