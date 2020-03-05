@@ -1,12 +1,15 @@
+// Imports
+// ==============================================================================================
 const express = require('express');
-
 const User = require('../models/users-model.js');
 const Values = require('../models/values-model.js');
 const Prompts = require('../models/prompts-model.js');
+// ==============================================================================================
 
 const router = express.Router();
 
-// we would like this to be protected 
+// Get all users
+// ==============================================================================================
 router.get('/', (req, res) => {
     User.getAll()
         .then(users => {
@@ -14,7 +17,10 @@ router.get('/', (req, res) => {
         })
         .catch(err => res.send(err));
 })
+// ==============================================================================================
 
+// Get the values one user has saved
+// ==============================================================================================
 router.get('/:id/values', (req, res) => {
     let { id } = req.params; //Get the values a specific user has saved from the default list of values
 
@@ -44,7 +50,10 @@ router.get('/:id/values', (req, res) => {
             })
         })
 })
+// ==============================================================================================
 
+// Get a user's top 3 values
+// ==============================================================================================
 router.get('/:id/values/top', (req,res) =>{  
     const {id} = req.params;
     
@@ -62,7 +71,10 @@ router.get('/:id/values/top', (req,res) =>{
     })
 
 })
+// ==============================================================================================
 
+// Update a user's top 3 values
+// ==============================================================================================
 router.put('/:id/values/top', (req, res) => {
 
     console.log(req.body);
@@ -78,11 +90,11 @@ router.put('/:id/values/top', (req, res) => {
             console.log(err);
             res.status(500).json({ message: 'Value cannot be added', Error: err })})
 });
+// ==============================================================================================
 
-
-//==============================================================================================================================
-//Prompt editing 
-
+// Importance and Involvement Prompt editing 
+// ==============================================================================================
+// Importance
 router.put('/:id/prompt', (req, res) => {
 
     const {id} = req.params;
@@ -104,6 +116,7 @@ router.put('/:id/prompt', (req, res) => {
             res.status(500).json({ message: 'Prompt failed to update', Error: err })})
 });
 
+// Involvement
 router.put('/:id/involvement', (req, res) => {
 
     const {id} = req.params;
@@ -124,22 +137,27 @@ router.put('/:id/involvement', (req, res) => {
             console.log(err);
             res.status(500).json({ message: 'Prompt failed to update', Error: err })})
 });
+// ==============================================================================================
 
-//==============================================================================================================================
-
+// Assign new values to a user profile (Save values)
+// ==============================================================================================
 router.post('/user-values', (req, res) => {
 
     Values.addValueToProfile(req.body)
         .then(value => res.status(200).json({ message: "Value added to profile" }))
         .catch(err => res.status(500).json({ message: 'Value cannot be added', Error: err }))
 });
+// ==============================================================================================
 
+// Delete a user account off the db (Not used by clients)
+// ==============================================================================================
 router.delete('/:id', (req, res) => {
     User.remove(req.params.id)
         .then(count => {
             res.status(200).json({ message: 'could not delete user' })
         })
 });
+// ==============================================================================================
 
 
 module.exports = router; 
