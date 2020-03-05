@@ -1,3 +1,5 @@
+//Imports 
+// ======================================================================================
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
@@ -8,15 +10,22 @@ const valuesRouter = require('./routers/values-router.js');
 
 const restrict = require('./auth/restricted-middleware.js')
 
+// ==============================================================================================
+
 const server = express();
 
 server.use(helmet());
 server.use(express.json());
 server.use(cors());
 
+//Routing
+// ==============================================================================================
 server.use('/api/auth', authRouter);
-server.use('/api/users', restrict, usersRouter);
-server.use('/api/values', restrict, valuesRouter);
+server.use('/api/users', /*restrict,*/ usersRouter);
+server.use('/api/values', /*restrict,*/ valuesRouter);
+// ==============================================================================================
+
+
 
 server.get('/', (req, res) => {
   res.send("You've reached the Essentialism back end!");
