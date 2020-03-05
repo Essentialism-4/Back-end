@@ -6,7 +6,7 @@ const Users = require('../models/users-model.js');
 
 const router = express.Router();
 
-router.get('/', (req, res) => { 
+router.get('/', (req, res) => {
     Values.getAllValues()
         .then(values => {
             res.status(200).json({ "All values": values })
@@ -18,6 +18,22 @@ router.get('/', (req, res) => {
             })
         })
 })
+
+router.get('/:id', (req, res) => {
+    const { id } = req.params;
+
+    Values.getValueByID(id)
+        .then(value => {
+            res.status(200).json({ "Specified Value": value })
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: "Error retrieving value",
+                Error: err
+            })
+        })
+})
+
 
 router.get('/custom', (req, res) => {
     Values.viewAllCustomValues()

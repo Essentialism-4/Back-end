@@ -6,10 +6,6 @@ const Prompts = require('../models/prompts-model.js');
 
 const router = express.Router();
 
-const authenticate = require('../auth/auth-router')
-
-
-
 // we would like this to be protected 
 router.get('/', (req, res) => {
     User.getAll()
@@ -94,7 +90,6 @@ router.put('/:id/prompt', (req, res) => {
 
     User.findByID(id)  //Is this even a real user? Checks here
     .then(response => {
-        // console.log('User:', res);
         if (response === undefined) {
             res.status(404).json({ message: "User with specified ID does not exist" })
         }
