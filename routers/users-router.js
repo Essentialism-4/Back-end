@@ -2,6 +2,7 @@ const express = require('express');
 
 const User = require('../models/users-model.js');
 const Values = require('../models/values-model.js');
+const Prompts = require('../models/prompts-model.js');
 
 const router = express.Router();
 
@@ -82,10 +83,59 @@ router.put('/:id/values/top', (req, res) => {
             res.status(500).json({ message: 'Value cannot be added', Error: err })})
 });
 
+
+//==============================================================================================================================
+//Prompt editing 
+
+router.put('/:id/prompt', (req, res) => {
+
+    const {id} = req.params;
+
+
+    User.findByID(id)  //Is this even a real user? Checks here
+    .then(response => {
+        // console.log('User:', res);
+        if (response === undefined) {
+            res.status(404).json({ message: "User with specified ID does not exist" })
+        }
+    })
+
+    const prompt = req.body.prompt
+
+    Prompts.updateImportancePrompt(prompt, id)
+        .then(value => res.status(200).json({ message: `Importance prompt updated for user ${id} ` }))
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ message: 'Prompt failed to update', Error: err })})
+});
+
+router.put('/:id/involvement', (req, res) => {
+
+    const {id} = req.params;
+
+    User.findByID(id)  //Is this even a real user? Checks here
+    .then(response => {
+        // console.log('User:', res);
+        if (response === undefined) {
+            res.status(404).json({ message: "User with specified ID does not exist" })
+        }
+    })
+
+    const prompt = req.body.prompt
+
+    Prompts.updateInvolvementPrompt(prompt, id)
+        .then(value => res.status(200).json({ message: `Involvement prompt updated for user ${id} ` }))
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ message: 'Prompt failed to update', Error: err })})
+});
+
+//==============================================================================================================================
+
 router.post('/user-values', (req, res) => {
 
     Values.addValueToProfile(req.body)
-        .then(value => res.status(200).json({ message: "Value added to profile", value }))
+        .then(value => res.status(200).json({ message: "Value added to profile" }))
         .catch(err => res.status(500).json({ message: 'Value cannot be added', Error: err }))
 });
 
