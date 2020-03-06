@@ -1,10 +1,9 @@
 const server = require('./server.js');
 const request = require('supertest');
-// const users = require('./seeds/users_values.js')
 const db = require('./config/db-config')
 
-const values = require('./models/values-model.js')
-const users = require('./models/users-model.js')
+const values = require('./models/values-model.js');
+const users = require('./models/users-model.js');
 
 
 beforeEach( async () => {
@@ -94,12 +93,10 @@ describe('POST /values', () => {
 // })
 
 describe('GET /custom', function() {
-
     beforeEach(async () => {
         await db('values').truncate();
     });
     
-
     // it('should return 200 OK', function() {
     //     return request(server)
     //         .get('/api/values')
@@ -108,22 +105,21 @@ describe('GET /custom', function() {
     //         })
     //     }),
         it('should insert values into the db', async () => {
-            const values = await db('values');
-            await values.update({user_id: 4, name: 'swimming'});
-
-            expect(values[0]).toHaveLength(1);
-            expect(values[0].user_id).toBe(4);
+            
+            await values.updateCustomValue({user_id: 4, name: 'swimming'});
+            const dbvalues = await db('values');
+            expect(dbvalues[0]).toHaveLength(1);
+            expect(dbvalues[0].user_id).toBe(4);
             
         });
-
     })
     
    
 
 describe('updateImportancePrompt', () => {
     it('update value into db', async () => {
-        const res = await request(server)
-        .put('/:id/prompt')
+        const res = await db('values');
+        await res.put('/:id/prompt')
         .send({
             prompt: "testing this is important"
         })
