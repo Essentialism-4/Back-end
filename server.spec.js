@@ -94,24 +94,42 @@ describe('POST /values', () => {
 // })
 
 describe('GET /custom', function() {
-    it('should return 200 OK', async() => {
-        return request(server)
-            .get('/values')
-            .then(res => {
-                expect(res.status).toBe(200);
-            })
-        })
-    // it('should return an array of values', async () => {
-    //     expect([]).insertCustomValue();
-    //     expect([1]).insertCustomValue();
-    //     expect(true).not.insertCustomValue();
-    // });
+
+    beforeEach(async () => {
+        await db('values').truncate();
     });
+    
 
+    // it('should return 200 OK', function() {
+    //     return request(server)
+    //         .get('/api/values')
+    //         .then(res => {
+    //             expect(res.status).toBe(200);
+    //         })
+    //     }),
+        it('should insert values into the db', async () => {
+            const values = await db('values');
+            await values.update({user_id: 4, name: 'swimming'});
 
-// describe('insert function', () => {
-//     it('insert value into db')
-// })
+            expect(values[0]).toHaveLength(1);
+            expect(values[0].user_id).toBe(4);
+            
+        });
+
+    })
+    
+   
+
+describe('updateImportancePrompt', () => {
+    it('update value into db', async () => {
+        const res = await request(server)
+        .put('/:id/prompt')
+        .send({
+            prompt: "testing this is important"
+        })
+        expect(res.status).toBe(201)
+    })
+})
 
 
 //TESTING TO ADD A USER TO DATABASE
