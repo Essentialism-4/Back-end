@@ -79,7 +79,7 @@ function getCustomValuesByID(id) {
 // Add a custom value 
 function insertCustomValue(value){  
     return db('custom_values')
-    .insert(value, 'id')
+    .insert(value)
 }
 
 // Change a custom value
