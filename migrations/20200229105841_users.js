@@ -24,10 +24,10 @@ exports.up = function (knex) {
 
 
         tbl //Why are these values of importance to you? 
-            .string('importance_prompt', 2028);
+            .string('importance_prompt');
 
         tbl //What projects and activities are you currently involved in?
-            .string('involvement_prompt', 2028);
+            .string('involvement_prompt');
     })
 // ==================================================================================================================================================
 

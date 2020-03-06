@@ -1,3 +1,5 @@
+// A fully fleshed out admin seed to test endpoints
+// ======================================================================================
 exports.seed = function(knex) {
   // Deletes ALL existing entries
   return knex('users').del()

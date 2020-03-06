@@ -1,4 +1,5 @@
-
+// Seeding for our dummy 'admin' user to attribute some values to them
+// ======================================================================================
 exports.seed = function(knex) {
   // Deletes ALL existing entries
   return knex('users_values').del()

@@ -87,7 +87,6 @@ function updateCustomValue(value, id) { //Works but not likely to be used
     return db('custom_values')
         .where('id', Number(id))
         .update(value);
-
 };
 
 // Delete a custom value
